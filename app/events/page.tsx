@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { EventCard } from "@/components/EventCard";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
+import { Carousel } from "@/components/Carousel";
 import { schedule, specialEvents } from "@/lib/site-data";
 
 export const metadata: Metadata = { title: "Events — Favourite Child Church" };
@@ -34,16 +35,19 @@ export default function EventsPage() {
       <h2 className="mt-16 text-2xl font-bold text-[var(--ink)]">
         Weekly Rhythm
       </h2>
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {schedule.map((item) => (
-          <AnnouncementCard
-            key={item.name}
-            name={item.name}
-            image={item.image}
-            detail={item.detail}
-            link={item.link}
-          />
-        ))}
+      <div className="mt-6 -mx-6 px-6">
+        <Carousel>
+          {schedule.map((item) => (
+            <div key={item.name} className="w-[340px] shrink-0 snap-start sm:w-[400px]">
+              <AnnouncementCard
+                name={item.name}
+                image={item.image}
+                detail={item.detail}
+                link={item.link}
+              />
+            </div>
+          ))}
+        </Carousel>
       </div>
     </div>
   );

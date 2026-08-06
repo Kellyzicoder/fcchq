@@ -1,6 +1,7 @@
-import Image from "next/image";
 import { Button } from "@/components/Button";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
+import { Carousel } from "@/components/Carousel";
+import { HeroVideo } from "@/components/HeroVideo";
 import { schedule, site } from "@/lib/site-data";
 import { getLatestVideos } from "@/lib/youtube";
 import { SermonCard } from "@/components/SermonCard";
@@ -12,13 +13,7 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative flex min-h-[85vh] items-end overflow-hidden">
-        <Image
-          src="/images/hero.jpg"
-          alt="Favourite Child Church congregation"
-          fill
-          priority
-          className="object-cover"
-        />
+        <HeroVideo />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--navy-deep)] via-[var(--navy-deep)]/60 to-transparent" />
         <div className="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-40">
           <span className="kicker">Welcome home</span>
@@ -51,16 +46,19 @@ export default async function HomePage() {
           Join us in person or online — everything at FCC flows from prayer.
         </p>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {schedule.map((item) => (
-            <AnnouncementCard
-              key={item.name}
-              name={item.name}
-              image={item.image}
-              detail={item.detail}
-              link={item.link}
-            />
-          ))}
+        <div className="mt-10 -mx-6 px-6">
+          <Carousel>
+            {schedule.map((item) => (
+              <div key={item.name} className="w-[340px] shrink-0 snap-start sm:w-[400px]">
+                <AnnouncementCard
+                  name={item.name}
+                  image={item.image}
+                  detail={item.detail}
+                  link={item.link}
+                />
+              </div>
+            ))}
+          </Carousel>
         </div>
       </section>
 

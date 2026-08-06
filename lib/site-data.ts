@@ -11,7 +11,27 @@ export const site = {
   applePodcastUrl:
     "https://podcasts.apple.com/nz/podcast/dag-heward-mills/id1560919244",
   linktreeUrl: "https://linktr.ee/fcchq",
+  contactEmail: "favouritechildchurch@gmail.com",
 };
+
+export type MediaItem = {
+  name: string;
+  description: string;
+  src: string;
+};
+
+export const mediaItems: MediaItem[] = [
+  {
+    name: "Baptism",
+    description: "New believers taking the step of water baptism at FCC.",
+    src: "/videos/baptism.mp4",
+  },
+  {
+    name: "Jesus March",
+    description: "FCC on the streets, marching and worshipping in the name of Jesus.",
+    src: "/videos/jesus-march.mp4",
+  },
+];
 
 export type Resource = {
   name: string;
@@ -41,7 +61,7 @@ export type ScheduleItem = {
 export type SpecialEvent = {
   name: string;
   date: string;
-  image: string;
+  image?: string;
   link?: string;
 };
 
@@ -50,6 +70,7 @@ export const specialEvents: SpecialEvent[] = [
     name: "Resurrection Sunday",
     date: "April 4, 2026",
     image: "/images/events/resurrection-sunday.jpg",
+    link: "https://www.facebook.com/media/set/?set=a.1431065759065817&type=3",
   },
   {
     name: "International Sunday",
@@ -60,23 +81,12 @@ export const specialEvents: SpecialEvent[] = [
   {
     name: "Appreciation Sunday",
     date: "December 28, 2025",
-    image: "/images/events/appreciation-sunday.jpg",
   },
   {
     name: "Valentine Encounter",
     date: "February 15, 2026",
     image: "/images/events/valentine-encounter.jpg",
     link: "https://www.facebook.com/media/set/?set=a.1383487023823691&type=3",
-  },
-  {
-    name: "Rising Stars",
-    date: "March 22, 2026",
-    image: "/images/events/rising-stars.jpg",
-  },
-  {
-    name: "Encounter Service",
-    date: "Every Sunday",
-    image: "/images/events/encounter-service.jpg",
   },
   {
     name: "Carols Night",
@@ -100,6 +110,7 @@ export const schedule: ScheduleItem[] = [
   {
     name: "Midweek Service",
     time: "Wednesdays, 7:00 PM",
+    detail: "A midweek reset of worship and the Word to carry you through to Sunday.",
     image: "/images/announcements/midweek.jpg",
   },
   {

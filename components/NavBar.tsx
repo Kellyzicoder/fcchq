@@ -9,6 +9,8 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/sermons", label: "Sermons" },
   { href: "/events", label: "Events" },
+  { href: "/media", label: "Media" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function NavBar() {

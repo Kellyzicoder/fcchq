@@ -24,6 +24,8 @@ export function Footer() {
               <li><Link href="/" className="hover:text-white">Home</Link></li>
               <li><Link href="/sermons" className="hover:text-white">Sermons</Link></li>
               <li><Link href="/events" className="hover:text-white">Events</Link></li>
+              <li><Link href="/media" className="hover:text-white">Media</Link></li>
+              <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
             </ul>
           </div>
 
