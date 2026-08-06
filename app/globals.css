@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colors — sampled from the FCC shield logo */
+  --navy: #122436;
+  --navy-deep: #0d1b28;
+  --teal-start: #1a5f66;
+  --teal-end: #2bad87;
+  --teal-600: #1f7a68;
+  --teal-700: #175f52;
+  --gold: #ffcc00;
+
+  /* Neutrals & surfaces */
+  --paper: #fbf9f5;
+  --paper-alt: #f3efe7;
+  --ink: #14202b;
+  --ink-soft: #4b5a63;
+  --line: rgba(20, 32, 43, 0.12);
+  --white: #ffffff;
+
+  /* Spacing scale (4px base rhythm) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 128px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* Shadow — soft, low-opacity, warm-tinted */
+  --shadow-sm: 0 2px 8px rgba(20, 32, 43, 0.08);
+  --shadow-md: 0 8px 24px rgba(20, 32, 43, 0.1);
+  --shadow-lg: 0 16px 48px rgba(20, 32, 43, 0.14);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: var(--navy);
+  --color-teal-start: var(--teal-start);
+  --color-teal-end: var(--teal-end);
+  --color-teal-600: var(--teal-600);
+  --color-teal-700: var(--teal-700);
+  --color-gold: var(--gold);
+  --color-paper: var(--paper);
+  --color-paper-alt: var(--paper-alt);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --font-sans: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display), -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hairline {
+  border: 1px solid var(--line);
+}
+
+.transition-brand {
+  transition: background-color 200ms var(--ease-out), color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out), transform 200ms var(--ease-out);
 }
