@@ -58,6 +58,7 @@ export default async function HomePage() {
               name={item.name}
               image={item.image}
               detail={item.detail}
+              link={item.link}
             />
           ))}
         </div>

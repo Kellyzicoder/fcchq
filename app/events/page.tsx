@@ -26,6 +26,7 @@ export default function EventsPage() {
             name={event.name}
             time={event.date}
             image={event.image}
+            link={event.link}
           />
         ))}
       </div>
@@ -40,6 +41,7 @@ export default function EventsPage() {
             name={item.name}
             image={item.image}
             detail={item.detail}
+            link={item.link}
           />
         ))}
       </div>

@@ -6,14 +6,19 @@ export function EventCard({
   time,
   detail,
   image,
+  link,
 }: {
   name: string;
   time: string;
   detail?: string;
   image?: string;
+  link?: string;
 }) {
-  return (
-    <div className="overflow-hidden rounded-[var(--radius-lg)] bg-white hairline shadow-[var(--shadow-sm)]">
+  const className =
+    "block overflow-hidden rounded-[var(--radius-lg)] bg-white hairline shadow-[var(--shadow-sm)] transition-brand hover:shadow-[var(--shadow-md)]";
+
+  const content = (
+    <>
       <div className="relative h-40">
         {image ? (
           <Image src={image} alt={name} fill className="object-cover" />
@@ -28,6 +33,16 @@ export function EventCard({
         <h3 className="text-lg font-bold text-[var(--ink)]">{name}</h3>
         {detail && <p className="mt-2 text-sm text-[var(--ink-soft)]">{detail}</p>}
       </div>
-    </div>
+    </>
   );
+
+  if (link) {
+    return (
+      <a href={link} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
 }
