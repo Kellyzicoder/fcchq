@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Button } from "@/components/Button";
 import { SermonCard } from "@/components/SermonCard";
 import { getLatestVideos } from "@/lib/youtube";
-import { site } from "@/lib/site-data";
+import { site, podcastPromoImage } from "@/lib/site-data";
 
 export const metadata: Metadata = { title: "Sermons — Favourite Child Church" };
 
@@ -42,6 +43,22 @@ export default async function SermonsPage() {
           </p>
         )}
       </div>
+
+      <a
+        href={site.podcastUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-12 block overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] transition-brand hover:shadow-[var(--shadow-md)]"
+      >
+        <div className="relative aspect-[16/6] w-full">
+          <Image
+            src={podcastPromoImage}
+            alt="Have you checked out the newest sermon? Search up Dag Heward-Mills on any podcast"
+            fill
+            className="object-cover"
+          />
+        </div>
+      </a>
     </div>
   );
 }

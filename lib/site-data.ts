@@ -1,3 +1,5 @@
+export const podcastPromoImage = "/images/announcements/podcast.jpg";
+
 export const site = {
   name: "Favourite Child Church",
   shortName: "FCC",
@@ -13,6 +15,7 @@ export type ScheduleItem = {
   name: string;
   time: string;
   detail?: string;
+  image: string;
 };
 
 export type SpecialEvent = {
@@ -55,18 +58,37 @@ export const specialEvents: SpecialEvent[] = [
 ];
 
 export const schedule: ScheduleItem[] = [
-  { name: "Sunday Service", time: "10:00 AM" },
-  { name: "Bible Study", time: "Mondays, Thursdays, Fridays" },
+  {
+    name: "Sunday Service",
+    time: "10:00 AM",
+    image: "/images/announcements/sunday_service.jpg",
+  },
+  {
+    name: "Bible Study",
+    time: "Mondays, Thursdays, Fridays",
+    image: "/images/announcements/bible_studies.jpg",
+  },
+  {
+    name: "Midweek Service",
+    time: "Wednesdays, 7:00 PM",
+    image: "/images/announcements/midweek.jpg",
+  },
   {
     name: "Dawn Prayers",
     time: "5:00 AM daily",
     detail: "Except Saturdays. Thursdays 4:00–6:00 AM. Via Zoom.",
+    image: "/images/announcements/dawn_prayers.jpg",
   },
-  { name: "Flow Prayer", time: "Tuesdays & Fridays, 4:30 PM" },
-  { name: "Flow Church", time: "Sundays, 9:00 PM" },
+  {
+    name: "Flow",
+    time: "Tue & Fri 4:30 PM · Sun 9:00 PM",
+    detail: "Flow Prayer (Tue/Fri) and Flow Church (Sun) with Dag Heward-Mills.",
+    image: "/images/announcements/flow_prayers.jpg",
+  },
   {
     name: "Ministries",
     time: "Ongoing",
     detail: "Speak to any pastor to get connected and start serving.",
+    image: "/images/announcements/join_a_ministry.jpg",
   },
 ];

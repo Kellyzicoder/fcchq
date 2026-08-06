@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/Button";
-import { Badge } from "@/components/Badge";
+import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { schedule, site } from "@/lib/site-data";
 import { getLatestVideos } from "@/lib/youtube";
 import { SermonCard } from "@/components/SermonCard";
@@ -53,18 +53,12 @@ export default async function HomePage() {
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {schedule.map((item) => (
-            <div
+            <AnnouncementCard
               key={item.name}
-              className="rounded-[var(--radius-lg)] bg-white p-6 hairline shadow-[var(--shadow-sm)]"
-            >
-              <Badge tone="teal">{item.time}</Badge>
-              <h3 className="mt-4 text-lg font-bold text-[var(--ink)]">
-                {item.name}
-              </h3>
-              {item.detail && (
-                <p className="mt-2 text-sm text-[var(--ink-soft)]">{item.detail}</p>
-              )}
-            </div>
+              name={item.name}
+              image={item.image}
+              detail={item.detail}
+            />
           ))}
         </div>
       </section>
@@ -96,22 +90,6 @@ export default async function HomePage() {
                 .
               </p>
             )}
-          </div>
-        </div>
-      </section>
-
-      {/* Give */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rounded-[var(--radius-lg)] bg-[var(--navy)] px-8 py-14 text-center text-white sm:px-16">
-          <span className="kicker">Sow a seed</span>
-          <h2 className="mx-auto mt-3 max-w-lg text-3xl font-bold sm:text-4xl">
-            Every seed sown helps take the Gospel further
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-white/70">2 Corinthians 9:7</p>
-          <div className="mt-8">
-            <Button variant="accent" href="#visit">
-              Give Online
-            </Button>
           </div>
         </div>
       </section>
