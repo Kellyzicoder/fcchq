@@ -91,7 +91,7 @@ export const specialEvents: SpecialEvent[] = [
     link: "https://www.facebook.com/media/set/?set=a.1383487023823691&type=3",
   },
   {
-    name: "Valentine Sunday Service (2026)",
+    name: "Valentine Sunday Service",
     date: "February 2026",
     image: "/images/events/valentine-sunday-service.jpg",
     link: "https://www.facebook.com/media/set/?set=a.1383489513823442&type=3",
