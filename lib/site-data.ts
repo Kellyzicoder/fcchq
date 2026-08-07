@@ -6,7 +6,7 @@ export const site = {
   address: "20B Te Pai Place, Henderson, Auckland 0610",
   youtubeChannelId: "UC-Z-KRBn3nxS_eHtVCX16fw",
   youtubeHandle: "@favouritechildchurch",
-  youtubeUrl: "https://www.youtube.com/@favouritechildchurch",
+  youtubeUrl: "https://www.youtube.com/@favouritechildchurch/streams",
   podcastUrl: "https://dagpreaching.org",
   applePodcastUrl:
     "https://podcasts.apple.com/nz/podcast/dag-heward-mills/id1560919244",
