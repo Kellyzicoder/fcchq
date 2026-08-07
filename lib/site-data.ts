@@ -81,16 +81,38 @@ export const specialEvents: SpecialEvent[] = [
   {
     name: "Appreciation Sunday",
     date: "December 28, 2025",
+    image: "/images/events/appreciation-sunday.jpg",
+    link: "https://www.facebook.com/media/set/?set=a.1336914211814306&type=3",
   },
   {
-    name: "Valentine Encounter",
+    name: "Love As Strong As Death",
     date: "February 15, 2026",
     image: "/images/events/valentine-encounter.jpg",
     link: "https://www.facebook.com/media/set/?set=a.1383487023823691&type=3",
   },
   {
-    name: "Carols Night",
-    date: "December",
+    name: "Valentine Sunday Service (2026)",
+    date: "February 2026",
+    link: "https://www.facebook.com/media/set/?set=a.1383489513823442&type=3",
+  },
+  {
+    name: "Mothers Day",
+    date: "May 2026",
+    link: "https://www.facebook.com/media/set/?set=a.1459952252843834&type=3",
+  },
+  {
+    name: "Fathers Day",
+    date: "September 2025",
+    link: "https://www.facebook.com/media/set/?set=a.1233433602162368&type=3",
+  },
+  {
+    name: "Christmas Service",
+    date: "December 2025",
+    link: "https://www.facebook.com/media/set/?set=a.1020091870163210&type=3",
+  },
+  {
+    name: "Carols Night 2024",
+    date: "December 2024",
     image: "/images/events/carols-night.jpg",
     link: "https://www.facebook.com/media/set/?set=a.1016664190505978&type=3",
   },
