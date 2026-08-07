@@ -25,13 +25,49 @@ export default async function HomePage() {
             Gospel of Jesus Christ for the salvation of mankind — raising up
             soul winners who impact their community and country.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4" id="visit">
-            <Button variant="accent" href="#rhythm">
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Button variant="accent" href="#visit">
               Plan Your Visit
             </Button>
             <Button variant="outlineLight" href={site.youtubeUrl}>
               Watch Live
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Plan your visit / address + map */}
+      <section id="visit" className="mx-auto max-w-6xl px-6 py-20">
+        <span className="kicker">We&apos;d love to see you</span>
+        <h2 className="mt-3 text-3xl font-bold text-[var(--ink)] sm:text-4xl">
+          Plan Your Visit
+        </h2>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="rounded-[var(--radius-lg)] bg-white p-8 hairline shadow-[var(--shadow-sm)]">
+            <h3 className="text-lg font-bold text-[var(--ink)]">Address</h3>
+            <p className="mt-2 text-[var(--ink-soft)]">{site.address}</p>
+            <h3 className="mt-6 text-lg font-bold text-[var(--ink)]">Sunday Service</h3>
+            <p className="mt-2 text-[var(--ink-soft)]">10:00 AM</p>
+            <Button
+              variant="primary"
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                site.address
+              )}`}
+              className="mt-6"
+            >
+              Get Directions
+            </Button>
+          </div>
+          <div className="overflow-hidden rounded-[var(--radius-lg)] hairline shadow-[var(--shadow-sm)]">
+            <iframe
+              title="Map to Favourite Child Church"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(
+                site.address
+              )}&output=embed`}
+              className="h-full min-h-[320px] w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>
