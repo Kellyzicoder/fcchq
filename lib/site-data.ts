@@ -3,7 +3,7 @@ export const podcastPromoImage = "/images/announcements/podcast.jpg";
 export const site = {
   name: "Favourite Child Church",
   shortName: "FCC",
-  address: "20 Te Pai Place, Henderson, Auckland",
+  address: "20B Te Pai Place, Henderson, Auckland 0610",
   youtubeChannelId: "UC-Z-KRBn3nxS_eHtVCX16fw",
   youtubeHandle: "@favouritechildchurch",
   youtubeUrl: "https://www.youtube.com/@favouritechildchurch",

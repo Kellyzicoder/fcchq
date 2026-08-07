@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/ContactForm";
+import { CopyEmail } from "@/components/CopyEmail";
 import { site } from "@/lib/site-data";
 
 export const metadata: Metadata = { title: "Contact — Favourite Child Church" };
@@ -12,28 +12,18 @@ export default function ContactPage() {
         Contact Us
       </h1>
       <p className="mt-4 max-w-xl text-[var(--ink-soft)]">
-        Have a question, a prayer request, or want to get connected? Send us
-        a message and we&apos;ll get back to you.
+        Have a question, a prayer request, or want to get connected? Reach us
+        by email — we&apos;d love to hear from you.
       </p>
 
-      <div className="mt-10 rounded-[var(--radius-lg)] bg-white p-6 hairline shadow-[var(--shadow-sm)] sm:p-8">
-        <ContactForm />
+      <div className="mt-10 rounded-[var(--radius-lg)] bg-white p-8 hairline shadow-[var(--shadow-sm)]">
+        <h2 className="kicker mb-3">Email</h2>
+        <CopyEmail email={site.contactEmail} />
       </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        <div>
-          <h2 className="kicker mb-2">Email</h2>
-          <a
-            href={`mailto:${site.contactEmail}`}
-            className="text-sm font-semibold text-[var(--teal-700)]"
-          >
-            {site.contactEmail}
-          </a>
-        </div>
-        <div>
-          <h2 className="kicker mb-2">Address</h2>
-          <p className="text-sm text-[var(--ink-soft)]">{site.address}</p>
-        </div>
+      <div className="mt-10">
+        <h2 className="kicker mb-2">Address</h2>
+        <p className="text-sm text-[var(--ink-soft)]">{site.address}</p>
       </div>
     </div>
   );
