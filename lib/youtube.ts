@@ -1,5 +1,3 @@
-import { site } from "./site-data";
-
 export type Video = {
   id: string;
   title: string;
@@ -22,10 +20,10 @@ function extract(tag: string, block: string) {
   return match ? decodeEntities(match[1].trim()) : "";
 }
 
-export async function getLatestVideos(limit = 6): Promise<Video[]> {
+export async function getLatestVideos(channelId: string, limit = 6): Promise<Video[]> {
   try {
     const res = await fetch(
-      `https://www.youtube.com/feeds/videos.xml?channel_id=${site.youtubeChannelId}`,
+      `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`,
       { next: { revalidate: 3600 } }
     );
     if (!res.ok) return [];

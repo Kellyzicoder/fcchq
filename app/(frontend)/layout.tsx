@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { NavBar } from "@/components/NavBar";
 import { Footer } from "@/components/Footer";
+import { getSiteSettings } from "@/lib/cms";
 import "./globals.css";
 
 // Stand-in for SF Pro Display (not licensed for web use here) — same
@@ -19,13 +20,15 @@ export const metadata: Metadata = {
     "Favourite Child Church (FCC) — a Bible-believing church in Henderson, Auckland, preaching the Gospel of Jesus Christ.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" className={`${display.variable} h-full`}>
       <body className="flex min-h-full flex-col antialiased">
-        <NavBar />
+        <NavBar name={settings.name} logoUrl={settings.logo} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer settings={settings} />
       </body>
     </html>
   );

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { mediaItems } from "@/lib/site-data";
+import { getVideos } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Media — Favourite Child Church" };
 
-export default function MediaPage() {
+export default async function MediaPage() {
+  const mediaItems = await getVideos();
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-16">
       <span className="kicker">Watch</span>
@@ -27,7 +29,9 @@ export default function MediaPage() {
               />
             </div>
             <h2 className="mt-4 text-xl font-bold text-[var(--ink)]">{item.name}</h2>
-            <p className="mt-1 text-sm text-[var(--ink-soft)]">{item.description}</p>
+            {item.description && (
+              <p className="mt-1 text-sm text-[var(--ink-soft)]">{item.description}</p>
+            )}
           </div>
         ))}
       </div>

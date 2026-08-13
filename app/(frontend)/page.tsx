@@ -2,18 +2,22 @@ import { Button } from "@/components/Button";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { Carousel } from "@/components/Carousel";
 import { HeroVideo } from "@/components/HeroVideo";
-import { schedule, site } from "@/lib/site-data";
+import { getAnnouncements, getSiteSettings } from "@/lib/cms";
 import { getLatestVideos } from "@/lib/youtube";
 import { SermonCard } from "@/components/SermonCard";
 
 export default async function HomePage() {
-  const videos = await getLatestVideos(3);
+  const settings = await getSiteSettings();
+  const schedule = await getAnnouncements();
+  const videos = settings.youtubeChannelId
+    ? await getLatestVideos(settings.youtubeChannelId, 3)
+    : [];
 
   return (
     <>
       {/* Hero */}
       <section className="relative flex min-h-[85vh] items-end overflow-hidden">
-        <HeroVideo />
+        {settings.heroVideo && <HeroVideo src={settings.heroVideo} />}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--navy-deep)] via-[var(--navy-deep)]/60 to-transparent" />
         <div className="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-40">
           <span className="kicker">Welcome home</span>
@@ -29,9 +33,11 @@ export default async function HomePage() {
             <Button variant="accent" href="#visit">
               Plan Your Visit
             </Button>
-            <Button variant="outlineLight" href={site.youtubeUrl}>
-              Watch Live
-            </Button>
+            {settings.youtubeUrl && (
+              <Button variant="outlineLight" href={settings.youtubeUrl}>
+                Watch Live
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -45,13 +51,13 @@ export default async function HomePage() {
         <div className="mt-10 grid gap-6 lg:grid-cols-2">
           <div className="rounded-[var(--radius-lg)] bg-white p-8 hairline shadow-[var(--shadow-sm)]">
             <h3 className="text-lg font-bold text-[var(--ink)]">Address</h3>
-            <p className="mt-2 text-[var(--ink-soft)]">{site.address}</p>
+            <p className="mt-2 text-[var(--ink-soft)]">{settings.address}</p>
             <h3 className="mt-6 text-lg font-bold text-[var(--ink)]">Sunday Service</h3>
             <p className="mt-2 text-[var(--ink-soft)]">10:00 AM</p>
             <Button
               variant="primary"
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                site.address
+                settings.address
               )}`}
               className="mt-6"
             >
@@ -62,7 +68,7 @@ export default async function HomePage() {
             <iframe
               title="Map to Favourite Child Church"
               src={`https://www.google.com/maps?q=${encodeURIComponent(
-                site.address
+                settings.address
               )}&output=embed`}
               className="h-full min-h-[320px] w-full border-0"
               loading="lazy"
@@ -88,9 +94,9 @@ export default async function HomePage() {
               <div key={item.name} className="w-[340px] shrink-0 snap-start sm:w-[400px]">
                 <AnnouncementCard
                   name={item.name}
-                  image={item.image}
-                  detail={item.detail}
-                  link={item.link}
+                  image={item.image ?? ""}
+                  detail={item.detail ?? undefined}
+                  link={item.link ?? undefined}
                 />
               </div>
             ))}
@@ -108,9 +114,11 @@ export default async function HomePage() {
                 Catch up on the Word
               </h2>
             </div>
-            <Button variant="outline" href={site.youtubeUrl}>
-              Browse All Messages
-            </Button>
+            {settings.youtubeUrl && (
+              <Button variant="outline" href={settings.youtubeUrl}>
+                Browse All Messages
+              </Button>
+            )}
           </div>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -119,9 +127,11 @@ export default async function HomePage() {
             ) : (
               <p className="text-[var(--ink-soft)]">
                 Messages stream live on our{" "}
-                <a href={site.youtubeUrl} className="font-semibold text-[var(--teal-700)]">
-                  YouTube channel
-                </a>
+                {settings.youtubeUrl && (
+                  <a href={settings.youtubeUrl} className="font-semibold text-[var(--teal-700)]">
+                    YouTube channel
+                  </a>
+                )}
                 .
               </p>
             )}

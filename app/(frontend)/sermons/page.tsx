@@ -3,12 +3,16 @@ import Image from "next/image";
 import { Button } from "@/components/Button";
 import { SermonCard } from "@/components/SermonCard";
 import { getLatestVideos } from "@/lib/youtube";
-import { site, podcastPromoImage, dagResources } from "@/lib/site-data";
+import { getResources, getSiteSettings } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Sermons — Favourite Child Church" };
 
 export default async function SermonsPage() {
-  const videos = await getLatestVideos(12);
+  const settings = await getSiteSettings();
+  const dagResources = await getResources();
+  const videos = settings.youtubeChannelId
+    ? await getLatestVideos(settings.youtubeChannelId, 12)
+    : [];
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
@@ -22,12 +26,16 @@ export default async function SermonsPage() {
       </p>
 
       <div className="mt-8 flex flex-wrap gap-4">
-        <Button variant="primary" href={site.youtubeUrl}>
-          Watch on YouTube
-        </Button>
-        <Button variant="outline" href={site.applePodcastUrl}>
-          Listen to DAG Podcast
-        </Button>
+        {settings.youtubeUrl && (
+          <Button variant="primary" href={settings.youtubeUrl}>
+            Watch on YouTube
+          </Button>
+        )}
+        {settings.applePodcastUrl && (
+          <Button variant="outline" href={settings.applePodcastUrl}>
+            Listen to DAG Podcast
+          </Button>
+        )}
       </div>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -36,29 +44,33 @@ export default async function SermonsPage() {
         ) : (
           <p className="text-[var(--ink-soft)]">
             Messages are streaming on our{" "}
-            <a href={site.youtubeUrl} className="font-semibold text-[var(--teal-700)]">
-              YouTube channel
-            </a>
+            {settings.youtubeUrl && (
+              <a href={settings.youtubeUrl} className="font-semibold text-[var(--teal-700)]">
+                YouTube channel
+              </a>
+            )}
             .
           </p>
         )}
       </div>
 
-      <a
-        href={site.applePodcastUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-12 block overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] transition-brand hover:shadow-[var(--shadow-md)]"
-      >
-        <div className="relative aspect-[16/6] w-full">
-          <Image
-            src={podcastPromoImage}
-            alt="Have you checked out the newest sermon? Search up Dag Heward-Mills on any podcast"
-            fill
-            className="object-cover"
-          />
-        </div>
-      </a>
+      {settings.applePodcastUrl && (
+        <a
+          href={settings.applePodcastUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-12 block overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-sm)] transition-brand hover:shadow-[var(--shadow-md)]"
+        >
+          <div className="relative aspect-[16/6] w-full">
+            <Image
+              src="/images/announcements/podcast.jpg"
+              alt="Have you checked out the newest sermon? Search up Dag Heward-Mills on any podcast"
+              fill
+              className="object-cover"
+            />
+          </div>
+        </a>
+      )}
 
       <h2 className="mt-16 text-2xl font-bold text-[var(--ink)]">
         More from Dag Heward-Mills

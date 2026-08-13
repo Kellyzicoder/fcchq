@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import { EventCard } from "@/components/EventCard";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { Carousel } from "@/components/Carousel";
-import { schedule, specialEvents } from "@/lib/site-data";
+import { getAnnouncements, getEvents } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Events — Favourite Child Church" };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const specialEvents = await getEvents();
+  const schedule = await getAnnouncements();
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-16">
       <span className="kicker">What&apos;s on</span>
@@ -27,7 +30,7 @@ export default function EventsPage() {
             name={event.name}
             time={event.date}
             image={event.image}
-            link={event.link}
+            link={event.link ?? undefined}
           />
         ))}
       </div>
@@ -41,9 +44,9 @@ export default function EventsPage() {
             <div key={item.name} className="w-[340px] shrink-0 snap-start sm:w-[400px]">
               <AnnouncementCard
                 name={item.name}
-                image={item.image}
-                detail={item.detail}
-                link={item.link}
+                image={item.image ?? ""}
+                detail={item.detail ?? undefined}
+                link={item.link ?? undefined}
               />
             </div>
           ))}

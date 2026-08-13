@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { CopyEmail } from "@/components/CopyEmail";
-import { site } from "@/lib/site-data";
+import { getSiteSettings } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Contact — Favourite Child Church" };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <span className="kicker">Get in touch</span>
@@ -18,12 +20,12 @@ export default function ContactPage() {
 
       <div className="mt-10 rounded-[var(--radius-lg)] bg-white p-8 hairline shadow-[var(--shadow-sm)]">
         <h2 className="kicker mb-3">Email</h2>
-        <CopyEmail email={site.contactEmail} />
+        <CopyEmail email={settings.contactEmail} />
       </div>
 
       <div className="mt-10">
         <h2 className="kicker mb-2">Address</h2>
-        <p className="text-sm text-[var(--ink-soft)]">{site.address}</p>
+        <p className="text-sm text-[var(--ink-soft)]">{settings.address}</p>
       </div>
     </div>
   );

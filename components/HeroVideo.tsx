@@ -1,7 +1,7 @@
-export function HeroVideo() {
+export function HeroVideo({ src }: { src: string }) {
   return (
     <video
-      src="/videos/jesus-march.mp4"
+      src={src}
       autoPlay
       muted
       loop

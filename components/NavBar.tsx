@@ -13,16 +13,16 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function NavBar() {
+export function NavBar({ name, logoUrl }: { name: string; logoUrl?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[var(--paper)]/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <Image src="/logo.png" alt="" width={40} height={40} priority />
+          {logoUrl && <Image src={logoUrl} alt="" width={40} height={40} priority />}
           <span className="text-sm font-bold tracking-tight text-[var(--ink)] sm:text-base">
-            Favourite Child Church
+            {name}
           </span>
         </Link>
 
