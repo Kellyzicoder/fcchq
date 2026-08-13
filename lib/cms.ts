@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import type { Event, Announcement, Video, Resource, Media, SiteSetting } from "@/payload-types";
+import type { Event, Announcement, Video, Resource, Media, SiteSetting, About } from "@/payload-types";
 
 async function payload() {
   return getPayload({ config });
@@ -126,5 +126,21 @@ export async function getSiteSettings(): Promise<CmsSiteSettings> {
     podcastUrl: settings.social?.podcastUrl,
     applePodcastUrl: settings.social?.applePodcastUrl,
     linktreeUrl: settings.social?.linktreeUrl,
+  };
+}
+
+export type CmsAbout = {
+  heading?: string | null;
+  photo?: string;
+  body: About["body"];
+};
+
+export async function getAbout(): Promise<CmsAbout> {
+  const p = await payload();
+  const about = (await p.findGlobal({ slug: "about", depth: 1 })) as About;
+  return {
+    heading: about.heading,
+    photo: mediaUrl(about.photo),
+    body: about.body,
   };
 }

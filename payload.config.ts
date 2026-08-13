@@ -12,6 +12,7 @@ import { Announcements } from "./collections/Announcements";
 import { Videos } from "./collections/Videos";
 import { Resources } from "./collections/Resources";
 import { SiteSettings } from "./globals/SiteSettings";
+import { About } from "./globals/About";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -34,7 +35,7 @@ export default buildConfig({
     Videos,
     Resources,
   ],
-  globals: [SiteSettings],
+  globals: [SiteSettings, About],
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),

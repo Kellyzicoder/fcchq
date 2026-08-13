@@ -22,6 +22,7 @@ export function Footer({ settings }: { settings: CmsSiteSettings }) {
             <h4 className="kicker mb-4">Explore</h4>
             <ul className="space-y-2 text-sm">
               <li><Link href="/" className="hover:text-white">Home</Link></li>
+              <li><Link href="/about" className="hover:text-white">About</Link></li>
               <li><Link href="/sermons" className="hover:text-white">Sermons</Link></li>
               <li><Link href="/events" className="hover:text-white">Events</Link></li>
               <li><Link href="/media" className="hover:text-white">Media</Link></li>
