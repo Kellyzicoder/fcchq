@@ -19,7 +19,15 @@ async function main() {
   const payload = await getPayload({ config });
 
   console.log("Clearing existing seeded collections...");
-  for (const slug of ["events", "announcements", "videos", "resources", "media"] as const) {
+  for (const slug of [
+    "events",
+    "upcoming-events",
+    "announcements",
+    "videos",
+    "sermons",
+    "resources",
+    "media",
+  ] as const) {
     const { docs } = await payload.find({ collection: slug, limit: 1000 });
     for (const doc of docs) {
       await payload.delete({ collection: slug, id: doc.id });
@@ -121,6 +129,73 @@ async function main() {
     });
   }
   console.log(`Seeded ${events.length} events.`);
+
+  // --- Upcoming Events (homepage "Upcoming Events" section) ---
+  const upcomingEvents = [
+    {
+      // NZST (UTC+12) — daylight saving starts the last Sunday of September
+      name: "Encounter Service",
+      category: "Worship",
+      startDate: "2026-08-30T18:00:00+12:00",
+      price: "Free",
+      attendeeCount: 130,
+      image: "/images/events/encounter-service.jpg",
+    },
+    {
+      name: "Rising Stars Youth Night",
+      category: "Youth",
+      startDate: "2026-09-13T18:00:00+12:00",
+      durationMinutes: 150,
+      price: "Free",
+      attendeeCount: 85,
+      image: "/images/events/rising-stars.jpg",
+    },
+    {
+      // NZDT (UTC+13)
+      name: "International Sunday",
+      category: "Outreach",
+      startDate: "2026-10-04T10:00:00+13:00",
+      price: "Free",
+      attendeeCount: 210,
+      image: "/images/events/international-sunday.jpg",
+    },
+    {
+      name: "Appreciation Sunday",
+      category: "Service",
+      startDate: "2026-11-08T10:00:00+13:00",
+      price: "Free",
+      attendeeCount: 260,
+      image: "/images/events/appreciation-sunday.jpg",
+    },
+    {
+      name: "Christmas Service",
+      category: "Service",
+      startDate: "2026-12-25T10:00:00+13:00",
+      durationMinutes: 90,
+      price: "Free",
+      attendeeCount: 300,
+      image: "/images/events/christmas-service.jpg",
+    },
+  ];
+
+  for (const [index, event] of upcomingEvents.entries()) {
+    const imageId = await upload(event.image, event.name);
+    await payload.create({
+      collection: "upcoming-events",
+      data: {
+        name: event.name,
+        category: event.category,
+        startDate: event.startDate,
+        durationMinutes: event.durationMinutes,
+        location: "Favourite Child Church, Auckland",
+        price: event.price,
+        attendeeCount: event.attendeeCount,
+        image: imageId,
+        order: index,
+      },
+    });
+  }
+  console.log(`Seeded ${upcomingEvents.length} upcoming events.`);
 
   // --- Announcements (Weekly Rhythm) ---
   const schedule = [
@@ -247,6 +322,8 @@ async function main() {
         applePodcastUrl:
           "https://podcasts.apple.com/nz/podcast/dag-heward-mills/id1560919244",
         linktreeUrl: "https://linktr.ee/fcchq",
+        dagHewardMillsChannelId: "UCmpJUHS40NNiHGCV_K7ya-A",
+        dagHewardMillsChannelUrl: "https://youtube.com/@daghewardmillsvideos",
       },
     },
   });

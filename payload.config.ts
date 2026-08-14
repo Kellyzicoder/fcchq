@@ -8,8 +8,10 @@ import { buildConfig } from "payload";
 
 import { Media } from "./collections/Media";
 import { Events } from "./collections/Events";
+import { UpcomingEvents } from "./collections/UpcomingEvents";
 import { Announcements } from "./collections/Announcements";
 import { Videos } from "./collections/Videos";
+import { Sermons } from "./collections/Sermons";
 import { Resources } from "./collections/Resources";
 import { SiteSettings } from "./globals/SiteSettings";
 import { About } from "./globals/About";
@@ -31,8 +33,10 @@ export default buildConfig({
     },
     Media,
     Events,
+    UpcomingEvents,
     Announcements,
     Videos,
+    Sermons,
     Resources,
   ],
   globals: [SiteSettings, About],

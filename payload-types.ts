@@ -70,8 +70,10 @@ export interface Config {
     users: User;
     media: Media;
     events: Event;
+    'upcoming-events': UpcomingEvent;
     announcements: Announcement;
     videos: Video;
+    sermons: Sermon;
     resources: Resource;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -83,8 +85,10 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
+    'upcoming-events': UpcomingEventsSelect<false> | UpcomingEventsSelect<true>;
     announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
+    sermons: SermonsSelect<false> | SermonsSelect<true>;
     resources: ResourcesSelect<false> | ResourcesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -199,6 +203,45 @@ export interface Event {
   createdAt: string;
 }
 /**
+ * Forward-looking events shown in the homepage "Upcoming Events" section. For photo galleries of past special Sundays, use the Events collection instead.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "upcoming-events".
+ */
+export interface UpcomingEvent {
+  id: string;
+  name: string;
+  /**
+   * Short tag shown on the card, e.g. "Service", "Youth", "Music"
+   */
+  category?: string | null;
+  /**
+   * Used to sort the list and to auto-hide the event once it's passed
+   */
+  startDate: string;
+  location?: string | null;
+  /**
+   * How long the event runs, in minutes — used for the end time on "Add to Calendar" links. Defaults to 2 hours.
+   */
+  durationMinutes?: number | null;
+  price?: string | null;
+  /**
+   * Optional — shown as "N+ going" on the card. Leave blank to hide.
+   */
+  attendeeCount?: number | null;
+  image?: (string | null) | Media;
+  /**
+   * Where the card's "Learn more" link points to, if anywhere
+   */
+  link?: string | null;
+  /**
+   * Lower numbers show first among events on the same day
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "announcements".
  */
@@ -225,6 +268,35 @@ export interface Video {
   name: string;
   description?: string | null;
   file: string | Media;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manually pinned sermon videos shown alongside the auto-fetched YouTube feed — use this to feature a video the feed hasn't picked up yet, or one from outside the usual channel.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons".
+ */
+export interface Sermon {
+  id: string;
+  title: string;
+  /**
+   * Which sermons section this appears in
+   */
+  channel: 'fcc' | 'dag';
+  /**
+   * Full YouTube video URL
+   */
+  youtubeUrl: string;
+  /**
+   * Optional — defaults to the video's own YouTube thumbnail if left blank
+   */
+  thumbnail?: (string | null) | Media;
+  publishedDate?: string | null;
+  /**
+   * Lower numbers show first, ahead of the auto-fetched videos
+   */
   order?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -278,12 +350,20 @@ export interface PayloadLockedDocument {
         value: string | Event;
       } | null)
     | ({
+        relationTo: 'upcoming-events';
+        value: string | UpcomingEvent;
+      } | null)
+    | ({
         relationTo: 'announcements';
         value: string | Announcement;
       } | null)
     | ({
         relationTo: 'videos';
         value: string | Video;
+      } | null)
+    | ({
+        relationTo: 'sermons';
+        value: string | Sermon;
       } | null)
     | ({
         relationTo: 'resources';
@@ -386,6 +466,24 @@ export interface EventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "upcoming-events_select".
+ */
+export interface UpcomingEventsSelect<T extends boolean = true> {
+  name?: T;
+  category?: T;
+  startDate?: T;
+  location?: T;
+  durationMinutes?: T;
+  price?: T;
+  attendeeCount?: T;
+  image?: T;
+  link?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "announcements_select".
  */
 export interface AnnouncementsSelect<T extends boolean = true> {
@@ -406,6 +504,20 @@ export interface VideosSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   file?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons_select".
+ */
+export interface SermonsSelect<T extends boolean = true> {
+  title?: T;
+  channel?: T;
+  youtubeUrl?: T;
+  thumbnail?: T;
+  publishedDate?: T;
   order?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -489,6 +601,11 @@ export interface SiteSetting {
     podcastUrl?: string | null;
     applePodcastUrl?: string | null;
     linktreeUrl?: string | null;
+    /**
+     * YouTube channel ID for Bishop Dag Heward-Mills (@daghewardmillsvideos) — used to pull his recent sermons via YouTube RSS
+     */
+    dagHewardMillsChannelId?: string | null;
+    dagHewardMillsChannelUrl?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -545,6 +662,8 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         podcastUrl?: T;
         applePodcastUrl?: T;
         linktreeUrl?: T;
+        dagHewardMillsChannelId?: T;
+        dagHewardMillsChannelUrl?: T;
       };
   updatedAt?: T;
   createdAt?: T;

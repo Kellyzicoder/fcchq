@@ -1,6 +1,16 @@
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import type { Event, Announcement, Video, Resource, Media, SiteSetting, About } from "@/payload-types";
+import type {
+  Event,
+  UpcomingEvent,
+  Announcement,
+  Video,
+  Sermon,
+  Resource,
+  Media,
+  SiteSetting,
+  About,
+} from "@/payload-types";
 
 async function payload() {
   return getPayload({ config });
@@ -32,6 +42,104 @@ export async function getEvents(): Promise<CmsEvent[]> {
     image: mediaUrl(doc.image),
     link: doc.link,
   }));
+}
+
+const CHURCH_TIME_ZONE = "Pacific/Auckland";
+
+function formatEventDateTime(iso: string): string {
+  const d = new Date(iso);
+  const date = d.toLocaleDateString("en-NZ", {
+    day: "numeric",
+    month: "short",
+    timeZone: CHURCH_TIME_ZONE,
+  });
+  const time = d.toLocaleTimeString("en-NZ", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: CHURCH_TIME_ZONE,
+  });
+  return `${date} · ${time}`;
+}
+
+const DEFAULT_EVENT_DURATION_MINUTES = 120;
+
+export type CmsUpcomingEvent = {
+  name: string;
+  category: string;
+  date: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  price: string;
+  attendeeCount?: number | null;
+  image?: string;
+  link?: string | null;
+};
+
+export async function getUpcomingEvents(limit = 8): Promise<CmsUpcomingEvent[]> {
+  const p = await payload();
+  const { docs } = await p.find({
+    collection: "upcoming-events",
+    depth: 1,
+    sort: "startDate",
+    limit,
+    where: {
+      startDate: { greater_than_equal: new Date().toISOString() },
+    },
+  });
+  return (docs as UpcomingEvent[]).map((doc) => {
+    const durationMinutes = doc.durationMinutes || DEFAULT_EVENT_DURATION_MINUTES;
+    const endDate = new Date(
+      new Date(doc.startDate).getTime() + durationMinutes * 60_000
+    ).toISOString();
+    return {
+      name: doc.name,
+      category: doc.category || "Service",
+      date: formatEventDateTime(doc.startDate),
+      startDate: doc.startDate,
+      endDate,
+      location: doc.location || "Favourite Child Church, Auckland",
+      price: doc.price || "Free",
+      attendeeCount: doc.attendeeCount,
+      image: mediaUrl(doc.image),
+      link: doc.link,
+    };
+  });
+}
+
+function videoIdFromUrl(url: string): string | undefined {
+  return url.match(/(?:v=|youtu\.be\/|shorts\/)([a-zA-Z0-9_-]{6,})/)?.[1];
+}
+
+export type CmsPinnedSermon = {
+  id: string;
+  title: string;
+  url: string;
+  thumbnail?: string;
+  published?: string | null;
+};
+
+export async function getPinnedSermons(channel: "fcc" | "dag"): Promise<CmsPinnedSermon[]> {
+  const p = await payload();
+  const { docs } = await p.find({
+    collection: "sermons",
+    depth: 1,
+    sort: "order",
+    limit: 50,
+    where: { channel: { equals: channel } },
+  });
+  return (docs as Sermon[]).map((doc) => {
+    const videoId = videoIdFromUrl(doc.youtubeUrl);
+    return {
+      id: doc.id,
+      title: doc.title,
+      url: doc.youtubeUrl,
+      thumbnail:
+        mediaUrl(doc.thumbnail) ??
+        (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : undefined),
+      published: doc.publishedDate,
+    };
+  });
 }
 
 export type CmsAnnouncement = {
@@ -108,6 +216,8 @@ export type CmsSiteSettings = {
   podcastUrl?: string | null;
   applePodcastUrl?: string | null;
   linktreeUrl?: string | null;
+  dagHewardMillsChannelId?: string | null;
+  dagHewardMillsChannelUrl?: string | null;
 };
 
 export async function getSiteSettings(): Promise<CmsSiteSettings> {
@@ -126,6 +236,8 @@ export async function getSiteSettings(): Promise<CmsSiteSettings> {
     podcastUrl: settings.social?.podcastUrl,
     applePodcastUrl: settings.social?.applePodcastUrl,
     linktreeUrl: settings.social?.linktreeUrl,
+    dagHewardMillsChannelId: settings.social?.dagHewardMillsChannelId,
+    dagHewardMillsChannelUrl: settings.social?.dagHewardMillsChannelUrl,
   };
 }
 

@@ -2,16 +2,14 @@ import { Button } from "@/components/Button";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { Carousel } from "@/components/Carousel";
 import { HeroVideo } from "@/components/HeroVideo";
-import { getAnnouncements, getSiteSettings } from "@/lib/cms";
-import { getLatestVideos } from "@/lib/youtube";
-import { SermonCard } from "@/components/SermonCard";
+import { UpcomingEvents } from "@/components/UpcomingEvents";
+import { SermonsFeed } from "@/components/SermonsFeed";
+import { getAnnouncements, getPinnedSermons, getSiteSettings } from "@/lib/cms";
 
 export default async function HomePage() {
   const settings = await getSiteSettings();
   const schedule = await getAnnouncements();
-  const videos = settings.youtubeChannelId
-    ? await getLatestVideos(settings.youtubeChannelId, 3)
-    : [];
+  const pinnedFcc = await getPinnedSermons("fcc");
 
   return (
     <>
@@ -41,6 +39,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <UpcomingEvents />
 
       {/* Plan your visit / address + map */}
       <section id="visit" className="mx-auto max-w-6xl px-6 py-20">
@@ -121,20 +121,13 @@ export default async function HomePage() {
             )}
           </div>
 
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {videos.length > 0 ? (
-              videos.map((video) => <SermonCard key={video.id} video={video} />)
-            ) : (
-              <p className="text-[var(--ink-soft)]">
-                Messages stream live on our{" "}
-                {settings.youtubeUrl && (
-                  <a href={settings.youtubeUrl} className="font-semibold text-[var(--teal-700)]">
-                    YouTube channel
-                  </a>
-                )}
-                .
-              </p>
-            )}
+          <div className="mt-10 -mx-6 px-6">
+            <SermonsFeed
+              channelId={settings.youtubeChannelId}
+              limit={10}
+              pinned={pinnedFcc}
+              channelUrl={settings.youtubeUrl}
+            />
           </div>
         </div>
       </section>

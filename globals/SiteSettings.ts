@@ -74,6 +74,20 @@ export const SiteSettings: GlobalConfig = {
           name: "linktreeUrl",
           type: "text",
         },
+        {
+          name: "dagHewardMillsChannelId",
+          type: "text",
+          defaultValue: "UCmpJUHS40NNiHGCV_K7ya-A",
+          admin: {
+            description:
+              'YouTube channel ID for Bishop Dag Heward-Mills (@daghewardmillsvideos) — used to pull his recent sermons via YouTube RSS',
+          },
+        },
+        {
+          name: "dagHewardMillsChannelUrl",
+          type: "text",
+          defaultValue: "https://youtube.com/@daghewardmillsvideos",
+        },
       ],
     },
   ],
