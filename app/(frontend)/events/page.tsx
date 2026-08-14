@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { EventCard } from "@/components/EventCard";
 import { AnnouncementCard } from "@/components/AnnouncementCard";
 import { Carousel } from "@/components/Carousel";
+import { UpcomingEvents } from "@/components/UpcomingEvents";
 import { getAnnouncements, getEvents } from "@/lib/cms";
 
 export const metadata: Metadata = { title: "Events — Favourite Child Church" };
@@ -21,7 +22,12 @@ export default async function EventsPage() {
       </p>
 
       <h2 className="mt-14 text-2xl font-bold text-[var(--ink)]">
-        Special Sundays
+        Upcoming Events
+      </h2>
+      <UpcomingEvents bare showHeader={false} />
+
+      <h2 className="mt-16 text-2xl font-bold text-[var(--ink)]">
+        Past Special Sundays
       </h2>
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {specialEvents.map((event) => (
