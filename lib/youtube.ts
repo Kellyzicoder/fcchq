@@ -20,26 +20,31 @@ function extract(tag: string, block: string) {
   return match ? decodeEntities(match[1].trim()) : "";
 }
 
-export async function getLatestVideos(channelId: string, limit = 6): Promise<Video[]> {
+/** Parses a YouTube channel RSS feed (https://www.youtube.com/feeds/videos.xml?channel_id=...) into videos. */
+export function parseYouTubeFeed(xml: string, limit = 10): Video[] {
+  const entries = xml.match(/<entry>[\s\S]*?<\/entry>/g) ?? [];
+
+  return entries.slice(0, limit).map((entry) => {
+    const id = extract("yt:videoId", entry);
+    return {
+      id,
+      title: extract("media:title", entry) || extract("title", entry),
+      url: `https://www.youtube.com/watch?v=${id}`,
+      thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+      published: extract("published", entry),
+    };
+  });
+}
+
+/** Server-side only — youtube.com doesn't send CORS headers on this feed, so it can't be fetched from the browser directly. */
+export async function fetchChannelVideos(channelId: string, limit = 10): Promise<Video[]> {
   try {
     const res = await fetch(
       `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 300 } }
     );
     if (!res.ok) return [];
-    const xml = await res.text();
-    const entries = xml.match(/<entry>[\s\S]*?<\/entry>/g) ?? [];
-
-    return entries.slice(0, limit).map((entry) => {
-      const id = extract("yt:videoId", entry);
-      return {
-        id,
-        title: extract("media:title", entry) || extract("title", entry),
-        url: `https://www.youtube.com/watch?v=${id}`,
-        thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-        published: extract("published", entry),
-      };
-    });
+    return parseYouTubeFeed(await res.text(), limit);
   } catch {
     return [];
   }
