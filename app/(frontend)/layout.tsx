@@ -5,6 +5,12 @@ import { Footer } from "@/components/Footer";
 import { getSiteSettings } from "@/lib/cms";
 import "./globals.css";
 
+// Every page in this route group reads live CMS data via Payload, so the
+// whole group is rendered dynamically per request rather than prerendered
+// at build time — CMS edits go live immediately and the build doesn't
+// depend on Payload's secret/DB being reachable at build time.
+export const dynamic = "force-dynamic";
+
 // Stand-in for SF Pro Display (not licensed for web use here) — same
 // clean, modern grotesque character. Swap via next/font/local if the
 // upright SF Pro Display weights become available.
