@@ -225,10 +225,6 @@ export interface UpcomingEvent {
    */
   durationMinutes?: number | null;
   price?: string | null;
-  /**
-   * Optional — shown as "N+ going" on the card. Leave blank to hide.
-   */
-  attendeeCount?: number | null;
   image?: (string | null) | Media;
   /**
    * Where the card's "Learn more" link points to, if anywhere
@@ -475,7 +471,6 @@ export interface UpcomingEventsSelect<T extends boolean = true> {
   location?: T;
   durationMinutes?: T;
   price?: T;
-  attendeeCount?: T;
   image?: T;
   link?: T;
   order?: T;

@@ -138,7 +138,6 @@ async function main() {
       category: "Worship",
       startDate: "2026-08-30T18:00:00+12:00",
       price: "Free",
-      attendeeCount: 130,
       image: "/images/events/encounter-service.jpg",
     },
     {
@@ -147,7 +146,6 @@ async function main() {
       startDate: "2026-09-13T18:00:00+12:00",
       durationMinutes: 150,
       price: "Free",
-      attendeeCount: 85,
       image: "/images/events/rising-stars.jpg",
     },
     {
@@ -156,7 +154,6 @@ async function main() {
       category: "Outreach",
       startDate: "2026-10-04T10:00:00+13:00",
       price: "Free",
-      attendeeCount: 210,
       image: "/images/events/international-sunday.jpg",
     },
     {
@@ -164,7 +161,6 @@ async function main() {
       category: "Service",
       startDate: "2026-11-08T10:00:00+13:00",
       price: "Free",
-      attendeeCount: 260,
       image: "/images/events/appreciation-sunday.jpg",
     },
     {
@@ -173,7 +169,6 @@ async function main() {
       startDate: "2026-12-25T10:00:00+13:00",
       durationMinutes: 90,
       price: "Free",
-      attendeeCount: 300,
       image: "/images/events/christmas-service.jpg",
     },
   ];
@@ -189,7 +184,6 @@ async function main() {
         durationMinutes: event.durationMinutes,
         location: "Favourite Child Church, Auckland",
         price: event.price,
-        attendeeCount: event.attendeeCount,
         image: imageId,
         order: index,
       },

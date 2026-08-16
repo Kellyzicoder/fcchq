@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
-import { buildGoogleCalendarUrl, buildIcsContent, slugify } from "@/lib/calendar";
+import { buildIcsContent, slugify } from "@/lib/calendar";
 
 export type UpcomingEvent = {
   name: string;
@@ -15,91 +15,44 @@ export type UpcomingEvent = {
   location: string;
   price: string;
   image?: string;
-  attendeeCount?: number | null;
   link?: string | null;
 };
 
-const avatarShades = ["var(--teal-start)", "var(--teal-600)", "var(--navy)"];
-
-function AttendeeAvatars({ count }: { count: number }) {
-  return (
-    <div className="flex items-center">
-      <div className="flex -space-x-2">
-        {avatarShades.map((color, i) => (
-          <span
-            key={i}
-            className="h-6 w-6 rounded-full ring-2 ring-white"
-            style={{ background: color }}
-          />
-        ))}
-      </div>
-      <span className="ml-2 text-xs font-semibold text-[var(--ink-soft)]">
-        {count}+ going
-      </span>
-    </div>
-  );
-}
-
-function AddToCalendarMenu({ event }: { event: UpcomingEvent }) {
-  const detailsRef = useRef<HTMLDetailsElement>(null);
+function AddToCalendarButton({ event }: { event: UpcomingEvent }) {
   const start = new Date(event.startDate);
   const end = new Date(event.endDate);
 
-  const calendarInput = {
-    title: event.name,
-    start,
-    end,
-    location: event.location,
-    uid: `${slugify(event.name)}-${start.getTime()}@favouritechildchurch`,
-  };
-
-  function close() {
-    if (detailsRef.current) detailsRef.current.open = false;
-  }
-
-  function downloadIcs() {
+  function openInCalendar() {
+    const calendarInput = {
+      title: event.name,
+      start,
+      end,
+      location: event.location,
+      uid: `${slugify(event.name)}-${start.getTime()}@favouritechildchurch`,
+    };
     const blob = new Blob([buildIcsContent(calendarInput)], {
       type: "text/calendar;charset=utf-8",
     });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${slugify(event.name)}.ics`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-    close();
+    // No `download` attribute: letting the browser navigate to the blob URL
+    // hands .ics content straight to the OS calendar app instead of forcing
+    // a file download.
+    window.location.href = url;
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
   }
 
   return (
-    <details ref={detailsRef} className="group relative mt-4">
-      <summary className="flex cursor-pointer list-none items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--line)] px-4 py-2 text-sm font-bold text-[var(--teal-700)] transition-brand hover:bg-[var(--paper-alt)] [&::-webkit-details-marker]:hidden">
-        <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 stroke-[var(--teal-700)]" fill="none" strokeWidth={2}>
-          <rect x="3" y="5" width="18" height="16" rx="2" />
-          <path strokeLinecap="round" d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4" />
-        </svg>
-        Add to Calendar
-      </summary>
-      <div className="absolute inset-x-0 z-10 mt-2 overflow-hidden rounded-[var(--radius-md)] bg-white hairline shadow-[var(--shadow-md)]">
-        <a
-          href={buildGoogleCalendarUrl(calendarInput)}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={close}
-          className="block px-4 py-3 text-sm font-semibold text-[var(--ink)] transition-brand hover:bg-[var(--paper-alt)] hover:text-[var(--teal-700)]"
-        >
-          Google Calendar
-        </a>
-        <button
-          type="button"
-          onClick={downloadIcs}
-          className="block w-full border-t border-[var(--line)] px-4 py-3 text-left text-sm font-semibold text-[var(--ink)] transition-brand hover:bg-[var(--paper-alt)] hover:text-[var(--teal-700)]"
-        >
-          Apple / Outlook (.ics)
-        </button>
-      </div>
-    </details>
+    <button
+      type="button"
+      onClick={openInCalendar}
+      className="mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--line)] px-4 py-2 text-sm font-bold text-[var(--teal-700)] transition-brand hover:bg-[var(--paper-alt)]"
+    >
+      <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 stroke-[var(--teal-700)]" fill="none" strokeWidth={2}>
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path strokeLinecap="round" d="M8 3v4M16 3v4M3 10h18M12 14v4M10 16h4" />
+      </svg>
+      Add to Calendar
+    </button>
   );
 }
 
@@ -160,12 +113,11 @@ export function UpcomingEventCard({ event }: { event: UpcomingEvent }) {
           <span>{event.date}</span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-[var(--line)] pt-4">
+        <div className="mt-4 border-t border-[var(--line)] pt-4">
           <span className="text-base font-bold text-[var(--teal-700)]">{event.price}</span>
-          {event.attendeeCount ? <AttendeeAvatars count={event.attendeeCount} /> : null}
         </div>
 
-        <AddToCalendarMenu event={event} />
+        <AddToCalendarButton event={event} />
 
         {event.link && (
           <Link
