@@ -39,18 +39,6 @@ export function buildIcsContent(event: CalendarEventInput): string {
   return lines.join("\r\n");
 }
 
-/** Google's URL-based "add event" template — no API key required. */
-export function buildGoogleCalendarUrl(event: CalendarEventInput): string {
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: event.title,
-    dates: `${formatICSDate(event.start)}/${formatICSDate(event.end)}`,
-  });
-  if (event.location) params.set("location", event.location);
-  if (event.description) params.set("details", event.description);
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
-}
-
 export function slugify(text: string): string {
   return text
     .toLowerCase()

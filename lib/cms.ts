@@ -71,7 +71,6 @@ export type CmsUpcomingEvent = {
   endDate: string;
   location: string;
   price: string;
-  attendeeCount?: number | null;
   image?: string;
   link?: string | null;
 };
@@ -100,7 +99,6 @@ export async function getUpcomingEvents(limit = 8): Promise<CmsUpcomingEvent[]> 
       endDate,
       location: doc.location || "Favourite Child Church, Auckland",
       price: doc.price || "Free",
-      attendeeCount: doc.attendeeCount,
       image: mediaUrl(doc.image),
       link: doc.link,
     };

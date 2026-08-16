@@ -60,13 +60,6 @@ export const UpcomingEvents: CollectionConfig = {
       defaultValue: "Free",
     },
     {
-      name: "attendeeCount",
-      type: "number",
-      admin: {
-        description: 'Optional — shown as "N+ going" on the card. Leave blank to hide.',
-      },
-    },
-    {
       name: "image",
       type: "upload",
       relationTo: "media",
