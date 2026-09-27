@@ -9,6 +9,7 @@ const publicDir = path.resolve(dirname, "../public");
 
 function mimeFor(filePath: string) {
   const ext = path.extname(filePath).toLowerCase();
+  if (ext === ".webp") return "image/webp";
   if (ext === ".png") return "image/png";
   if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
   if (ext === ".mp4") return "video/mp4";
@@ -62,55 +63,55 @@ async function main() {
     {
       name: "Resurrection Sunday",
       date: "April 4, 2026",
-      image: "/images/events/resurrection-sunday.jpg",
+      image: "/images/events/resurrection-sunday.webp",
       link: "https://www.facebook.com/media/set/?set=a.1431065759065817&type=3",
     },
     {
       name: "International Sunday",
       date: "September 14, 2025",
-      image: "/images/events/international-sunday.jpg",
+      image: "/images/events/international-sunday.webp",
       link: "https://www.facebook.com/media/set/?set=a.1237389891766739&type=3",
     },
     {
       name: "Appreciation Sunday",
       date: "December 28, 2025",
-      image: "/images/events/appreciation-sunday.jpg",
+      image: "/images/events/appreciation-sunday.webp",
       link: "https://www.facebook.com/media/set/?set=a.1336914211814306&type=3",
     },
     {
       name: "Love As Strong As Death",
       date: "February 15, 2026",
-      image: "/images/events/love-as-strong-as-death.jpg",
+      image: "/images/events/love-as-strong-as-death.webp",
       link: "https://www.facebook.com/media/set/?set=a.1383487023823691&type=3",
     },
     {
       name: "Valentine Sunday Service",
       date: "February 2026",
-      image: "/images/events/valentine-sunday-service.jpg",
+      image: "/images/events/valentine-sunday-service.webp",
       link: "https://www.facebook.com/media/set/?set=a.1383489513823442&type=3",
     },
     {
       name: "Mothers Day",
       date: "May 2026",
-      image: "/images/events/mothers-day.jpg",
+      image: "/images/events/mothers-day.webp",
       link: "https://www.facebook.com/media/set/?set=a.1459952252843834&type=3",
     },
     {
       name: "Fathers Day",
       date: "September 2025",
-      image: "/images/events/fathers-day.jpg",
+      image: "/images/events/fathers-day.webp",
       link: "https://www.facebook.com/media/set/?set=a.1233433602162368&type=3",
     },
     {
       name: "Christmas Service",
       date: "December 2025",
-      image: "/images/events/christmas-service.jpg",
+      image: "/images/events/christmas-service.webp",
       link: "https://www.facebook.com/media/set/?set=a.1020091870163210&type=3",
     },
     {
       name: "Carols Night 2024",
       date: "December 2024",
-      image: "/images/events/carols-night.jpg",
+      image: "/images/events/carols-night.webp",
       link: "https://www.facebook.com/media/set/?set=a.1016664190505978&type=3",
     },
   ];
@@ -138,7 +139,7 @@ async function main() {
       category: "Worship",
       startDate: "2026-08-30T18:00:00+12:00",
       price: "Free",
-      image: "/images/events/encounter-service.jpg",
+      image: "/images/events/encounter-service.webp",
     },
     {
       name: "Rising Stars Youth Night",
@@ -146,7 +147,7 @@ async function main() {
       startDate: "2026-09-13T18:00:00+12:00",
       durationMinutes: 150,
       price: "Free",
-      image: "/images/events/rising-stars.jpg",
+      image: "/images/events/rising-stars.webp",
     },
     {
       // NZDT (UTC+13)
@@ -154,14 +155,14 @@ async function main() {
       category: "Outreach",
       startDate: "2026-10-04T10:00:00+13:00",
       price: "Free",
-      image: "/images/events/international-sunday.jpg",
+      image: "/images/events/international-sunday.webp",
     },
     {
       name: "Appreciation Sunday",
       category: "Service",
       startDate: "2026-11-08T10:00:00+13:00",
       price: "Free",
-      image: "/images/events/appreciation-sunday.jpg",
+      image: "/images/events/appreciation-sunday.webp",
     },
     {
       name: "Christmas Service",
@@ -169,7 +170,7 @@ async function main() {
       startDate: "2026-12-25T10:00:00+13:00",
       durationMinutes: 90,
       price: "Free",
-      image: "/images/events/christmas-service.jpg",
+      image: "/images/events/christmas-service.webp",
     },
   ];
 
@@ -196,37 +197,37 @@ async function main() {
     {
       name: "Sunday Service",
       time: "10:00 AM",
-      image: "/images/announcements/sunday_service.jpg",
+      image: "/images/announcements/sunday_service.webp",
     },
     {
       name: "Bible Study",
       time: "Mondays, Thursdays, Fridays",
-      image: "/images/announcements/bible_studies.jpg",
+      image: "/images/announcements/bible_studies.webp",
     },
     {
       name: "Midweek Service",
       time: "Wednesdays, 7:00 PM",
       detail: "A midweek reset of worship and the Word to carry you through to Sunday.",
-      image: "/images/announcements/midweek.jpg",
+      image: "/images/announcements/midweek.webp",
     },
     {
       name: "Dawn Prayers",
       time: "5:00 AM daily",
       detail: "Except Saturdays. Thursdays 4:00–6:00 AM. Via Zoom.",
-      image: "/images/announcements/dawn_prayers.jpg",
+      image: "/images/announcements/dawn_prayers.webp",
     },
     {
       name: "Flow",
       time: "Tue & Fri 4:30 PM · Sun 9:00 PM",
       detail: "Flow Prayer (Tue/Fri) and Flow Church (Sun) with Dag Heward-Mills.",
-      image: "/images/announcements/flow_prayers.jpg",
+      image: "/images/announcements/flow_prayers.webp",
       link: "https://www.youtube.com/results?search_query=flow+church",
     },
     {
       name: "Ministries",
       time: "Ongoing",
       detail: "Speak to any pastor to get connected and start serving.",
-      image: "/images/announcements/join_a_ministry.jpg",
+      image: "/images/announcements/join_a_ministry.webp",
     },
   ];
 
@@ -247,12 +248,9 @@ async function main() {
   console.log(`Seeded ${schedule.length} announcements.`);
 
   // --- Videos ---
+  // A single, compressed video keeps the site light — it doubles as the hero
+  // background on the homepage.
   const videos = [
-    {
-      name: "Baptism",
-      description: "New believers taking the step of water baptism at FCC.",
-      file: "/videos/baptism.mp4",
-    },
     {
       name: "Jesus March",
       description: "FCC on the streets, marching and worshipping in the name of Jesus.",
@@ -296,7 +294,7 @@ async function main() {
   console.log(`Seeded ${resources.length} resources.`);
 
   // --- Site Settings ---
-  const logoId = await upload("/logo.png", "Favourite Child Church logo");
+  const logoId = await upload("/logo.webp", "Favourite Child Church logo");
   const heroVideoId = await upload("/videos/jesus-march.mp4", "Hero background video");
 
   await payload.updateGlobal({
