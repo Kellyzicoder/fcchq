@@ -63,7 +63,7 @@ export function UpcomingEventCard({ event }: { event: UpcomingEvent }) {
     <div className="block overflow-hidden rounded-[var(--radius-lg)] bg-white hairline shadow-[var(--shadow-sm)] transition-brand hover:shadow-[var(--shadow-md)]">
       <div className="relative h-40">
         {event.image ? (
-          <Image src={event.image} alt={event.name} fill className="object-cover" />
+          <Image src={event.image} alt={event.name} fill sizes="(max-width: 640px) 100vw, 400px" className="object-cover" />
         ) : (
           <PhotoPlaceholder className="absolute inset-0" />
         )}

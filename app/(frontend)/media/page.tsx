@@ -25,6 +25,7 @@ export default async function MediaPage() {
                 controls
                 playsInline
                 preload="metadata"
+                poster="/videos/jesus-march-poster.webp"
                 className="aspect-video w-full"
               />
             </div>
