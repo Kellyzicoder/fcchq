@@ -23,7 +23,7 @@ export function SermonCard({ video }: { video: Video }) {
             src={video.thumbnail}
             alt={video.title}
             fill
-            unoptimized
+            sizes="(max-width: 640px) 100vw, 360px"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         )}
