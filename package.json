@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "generate:importmap": "payload generate:importmap",
-    "generate:types": "payload generate:types"
+    "generate:types": "payload generate:types",
+    "optimize:media": "payload run scripts/optimize-media.ts"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.88.0",

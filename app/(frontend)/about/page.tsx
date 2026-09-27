@@ -18,7 +18,7 @@ export default async function AboutPage() {
 
       {about.photo && (
         <div className="relative mt-10 aspect-[16/10] w-full overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-md)]">
-          <Image src={about.photo} alt={about.heading || "About us"} fill className="object-cover" />
+          <Image src={about.photo} alt={about.heading || "About us"} fill sizes="(max-width: 1024px) 100vw, 1024px" className="object-cover" />
         </div>
       )}
 

@@ -14,7 +14,7 @@ export function AnnouncementCard({
   const content = (
     <>
       <div className="relative aspect-video">
-        <Image src={image} alt={name} fill className="object-cover" />
+        <Image src={image} alt={name} fill sizes="(max-width: 640px) 340px, 400px" className="object-cover" />
       </div>
       {detail && (
         <div className="p-4">

@@ -21,7 +21,7 @@ export function EventCard({
     <>
       <div className="relative h-40">
         {image ? (
-          <Image src={image} alt={name} fill className="object-cover" />
+          <Image src={image} alt={name} fill sizes="(max-width: 640px) 100vw, 400px" className="object-cover" />
         ) : (
           <PhotoPlaceholder className="absolute inset-0" />
         )}

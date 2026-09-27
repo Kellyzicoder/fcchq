@@ -54,9 +54,10 @@ export default async function SermonsPage() {
         >
           <div className="relative aspect-[16/6] w-full">
             <Image
-              src="/images/announcements/podcast.jpg"
+              src="/images/announcements/podcast.webp"
               alt="Have you checked out the newest sermon? Search up Dag Heward-Mills on any podcast"
               fill
+              sizes="(max-width: 1024px) 100vw, 1024px"
               className="object-cover"
             />
           </div>
